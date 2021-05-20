@@ -1,17 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import App from './containers/App';
 import store from './redux/store'
+import { Provider } from 'react-redux'
 
 ReactDOM.render(
-  <App store={store} />,
+  <Provider store={store}>
+    <App/>
+  </Provider>,
   document.getElementById('root')
 );
-//监听回调函数，state出现变化处罚回调
-//store状态变化则重新渲染
-store.subscribe(() => {
-  ReactDOM.render(
-    <App store={store} />,
-    document.getElementById('root')
-  );
-})

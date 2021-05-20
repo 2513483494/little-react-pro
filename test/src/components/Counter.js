@@ -1,40 +1,43 @@
-/* eslint-disable no-lone-blocks */
-/* eslint-disable no-unused-expressions */
 import React, { Component } from 'react';
 import ProtoTypes from 'prop-types'
-import { increment, decrement } from './redux/actions'
-
-export default class App extends Component {
+/*
+UI组件
+  主要做显示与用户交互
+  代码中不操作redux
+*/
+export default class Counter extends Component {
+  //需要获取
   static propTypes = {
-    store: ProtoTypes.object.isRequired
+    count: ProtoTypes.number.isRequired,
+    increment: ProtoTypes.func.isRequired,
+    decrement: ProtoTypes.func.isRequired,
   }
   constructor(props) {
     super(props)
-
     this.numRef = React.createRef()
   }
   increase = () => {
     const num = this.numRef.current.value
-    this.props.store.dispatch(increment(num))
+    this.props.increment(num)
   }
   decrease = () => {
     const num = this.numRef.current.value
-    this.props.store.dispatch(decrement(num))
+    this.props.decrement(num)
   }
   increaseIfodd = () => {
     const num = Number(this.numRef.current.value)
-    if (this.props.store.getState() % 2 === 1) {
-      this.props.store.dispatch(increment(num))
+    if (this.props.count % 2 === 1) {
+      this.props.increment(num)
     }
   }
   increaseAsync = () => {
     const num = Number(this.numRef.current.value)
     setTimeout(() => {
-      this.props.store.dispatch(increment(num))
+      this.props.increment(num)
     }, 1000);
   }
   render() {
-    const count = this.props.store.getState()
+    const count = this.props.count
     return (
       <div>
         <p>click {count} times</p>
