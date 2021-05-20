@@ -1,2 +1,1 @@
-# little-react-pro
-清爽react，删除了无用的东西
+学习redux的先例，react实现的counter，下个分支用redux实现
