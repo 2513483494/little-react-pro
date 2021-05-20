@@ -1,38 +1,40 @@
 /* eslint-disable no-lone-blocks */
 /* eslint-disable no-unused-expressions */
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import ProtoTypes from 'prop-types'
+import { increment, decrement } from './redux/actions'
 
 export default class App extends Component {
+  static propTypes = {
+    store: ProtoTypes.object.isRequired
+  }
   constructor(props) {
     super(props)
-    this.state = {
-      count: 0
-    }
+
     this.numRef = React.createRef()
   }
   increase = () => {
     const num = this.numRef.current.value
-    this.setState(state => ({count: state.count + Number(num)}))
+    this.props.store.dispatch(increment(num))
   }
   decrease = () => {
     const num = this.numRef.current.value
-    this.setState(state => ({count: state.count - Number(num)}))
+    this.props.store.dispatch(decrement(num))
   }
   increaseIfodd = () => {
     const num = Number(this.numRef.current.value)
-    if(this.state.count%2===1){
-      this.setState(state => ({count: state.count + Number(num)}))
+    if (this.props.store.getState() % 2 === 1) {
+      this.props.store.dispatch(increment(num))
     }
   }
   increaseAsync = () => {
     const num = Number(this.numRef.current.value)
     setTimeout(() => {
-      this.setState(state => ({count: state.count + num}))
+      this.props.store.dispatch(increment(num))
     }, 1000);
   }
   render() {
-    const { count } = this.state
+    const count = this.props.store.getState()
     return (
       <div>
         <p>click {count} times</p>
