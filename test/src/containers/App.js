@@ -32,5 +32,5 @@ connect返回的函数是高阶组件
 //最终版
 export default connect(
   state => ({ count: state }),
-  { increment, decrement }
+  { increment, decrement }//会自动包装成上面的样子
 )(Counter)
